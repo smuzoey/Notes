@@ -1,4 +1,6 @@
-# 导包
+
+
+# 1、导包
 
 ```
 go mod init ProjectName
@@ -15,17 +17,39 @@ go mod init ProjectName  // 系统自动生成 go.mod
 go mod download github.com/go-sql-driver/mysql
 ```
 
+# 2、go web 基础
 
 
 
+## 2.1 golang http.handler 
 
+1、http.HanderFunc 																																	
 
+```Go
+/*
+	HanderFunc 可以将普通函数（具有适当签名的）作为处理器使用
+	使用 http.HandleFunc( func(http.ResponseWriter, *http.Request) )，传入处理器函数，参数必须满足 HandleFunc的要求
+	
+	ListenAndServe监听TCP地址addr，并且会使用handler参数调用Serve函数处理接收到的连接。handler参数一般会设为nil，此时会使用DefaultServeMux。
+*/
 
-# golang http.handler 
+// 处理器函数
+func handler(w http.ResponseWriter, r *http.Request) {
+   fmt.Fprintln(w, "hello", r.URL.Path)
+}
 
-
-
+func main() {
+   http.HandleFunc("/", handler)
+   // 创建路由, nil 使用默认的复用器
+   http.ListenAndServe(":8080", nil)
+}
 ```
+
+
+
+
+
+```Go
 package main
 
 import (
@@ -73,7 +97,7 @@ func (f HandlerFunc) ServeHTTP(w ResponseWriter, r *Request) {
 
 
 
-# 单元测试
+# 3、单元测试
 
 filename :  _test.go
 
